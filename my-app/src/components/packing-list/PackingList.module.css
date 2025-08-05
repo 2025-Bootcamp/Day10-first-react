@@ -1,0 +1,75 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.container h1 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filterSection {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.filterSection label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.itemList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  padding: 8px 12px;
+  margin: 4px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.item.checked {
+  background-color: #e8f5e8;
+  border-color: #4caf50;
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.item label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.item input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+.item.checked input[type="checkbox"] {
+  accent-color: #4caf50;
+}
+
+/* 悬停效果 */
+.item:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.item.checked:hover {
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2);
+} 

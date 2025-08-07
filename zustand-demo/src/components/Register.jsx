@@ -1,29 +1,30 @@
 
 import './Register.css';
+import { useRegisterStore } from '../stores/registerStore';
 
 function VerificationCodeButton() {
-  const handleSendCode = () => {
-    // 处理发送验证码逻辑
-    console.log('发送验证码');
-  };
+  const { sendVerificationCode, verificationCodeState } = useRegisterStore();
   
   return (
     <button 
       type="button" 
-      onClick={handleSendCode}
+      onClick={sendVerificationCode}
+      disabled={verificationCodeState.countdown > 0 || verificationCodeState.isLoading}
     >
-      发送验证码
+      {verificationCodeState.countdown > 0 ? `${verificationCodeState.countdown}s后重发` : '发送验证码'}
     </button>
   );
 }
 
 function Register() {
-  const handleSubmit = (e) => {
+  const { formData, onUpdateFormData } = useRegisterStore();
+  
+  function handleSubmit(e) {
     e.preventDefault();
     // 处理表单提交逻辑
     console.log('表单提交');
-  };
-
+  }
+  
   return (
     <div className="Register">
       <h1>用户注册</h1>
@@ -36,6 +37,8 @@ function Register() {
               id="username"
               placeholder="请输入用户名" 
               required
+              value={formData.username}
+              onChange={function(e) { onUpdateFormData('username', e.target.value); }}
             />
           </li>
           <li>
@@ -45,6 +48,8 @@ function Register() {
               id="password"
               placeholder="请输入密码" 
               required
+              value={formData.password}
+              onChange={function(e) { onUpdateFormData('password', e.target.value); }}
             />
           </li>
           <li>
@@ -55,6 +60,8 @@ function Register() {
                 id="phone"
                 placeholder="请输入手机号" 
                 required
+                value={formData.phone}
+                onChange={function(e) { onUpdateFormData('phone', e.target.value); }}
               />
               <VerificationCodeButton />
             </div>
@@ -66,6 +73,8 @@ function Register() {
               id="verificationCode"
               placeholder="请输入手机验证码" 
               required
+              value={formData.verificationCode}
+              onChange={function(e) { onUpdateFormData('verificationCode', e.target.value); }}
             />
           </li>
         </ul>

@@ -3,8 +3,9 @@ import items from './items';
 
 export const usePackingStore = create((set, get) => ({
   // 状态
-  items: items,
+  items: [],
   isFilter: false,
+  loading: true,
 
   // 操作方法
   toggleItem: (itemId) => {
@@ -42,6 +43,17 @@ export const usePackingStore = create((set, get) => ({
     set((state) => ({
       items: state.items.filter(item => !item.isPacked)
     }));
+  },
+
+  // 异步获取数据
+  fetchItems: async () => {
+    set({ loading: true });
+    
+    // 模拟网络请求
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // 模拟从后端获取数据
+    set({ items: items, loading: false });
   },
 
   // 选择器函数

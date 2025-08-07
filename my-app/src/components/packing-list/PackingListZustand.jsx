@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePackingStore } from './packingStore';
 import styles from './PackingList.module.css';
 
@@ -90,11 +90,31 @@ export default function PackingListZustand() {
   // 从 store 获取状态和方法
   const { 
     isFilter, 
-    toggleFilter 
+    toggleFilter,
+    loading,
+    fetchItems
   } = usePackingStore();
   
   const getFilteredItems = usePackingStore(state => state.getFilteredItems);
   const filteredItems = getFilteredItems();
+
+  // 组件挂载时获取数据
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
+
+  // 加载状态
+  if (loading) {
+    return (
+      <section className={styles.container}>
+        <h1>Sally Ride 的行李清单 (Zustand 版本)</h1>
+        <div className={styles.loadingSection}>
+          <div className={styles.loadingSpinner}></div>
+          <p>正在加载行李清单...</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={styles.container}>

@@ -1,24 +1,32 @@
 
 import './Register.css';
+import { useRegisterStore } from '../stores/registerStore';
 
 function VerificationCodeButton() {
+  const { verificationCodeState, sendVerificationCode } = useRegisterStore();
+
   const handleSendCode = () => {
+    sendVerificationCode();
     // 处理发送验证码逻辑
-    console.log('发送验证码');
+    // console.log('发送验证码');
   };
-  
+
   return (
-    <button 
-      type="button" 
+    <button
+      type="button"
       onClick={handleSendCode}
+      disabled={verificationCodeState.isLoading}
     >
-      发送验证码
+      {verificationCodeState.countdown > 0 ? `${verificationCodeState.countdown}s后重发` : '发送验证码'}
     </button>
   );
 }
 
 function Register() {
+  const { formData, onUpdateFormData } = useRegisterStore();
+
   const handleSubmit = (e) => {
+    console.log(formData);
     e.preventDefault();
     // 处理表单提交逻辑
     console.log('表单提交');
@@ -31,41 +39,49 @@ function Register() {
         <ul>
           <li>
             <label htmlFor="username">用户名</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               id="username"
-              placeholder="请输入用户名" 
+              placeholder="请输入用户名"
               required
+              onChange={(e) => onUpdateFormData('username', e.target.value)}
+              value={formData.username}
             />
           </li>
           <li>
             <label htmlFor="password">密码</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               id="password"
-              placeholder="请输入密码" 
+              placeholder="请输入密码"
               required
+              onChange={(e) => onUpdateFormData('password', e.target.value)}
+              value={ formData.password}
             />
           </li>
           <li>
             <label htmlFor="phone">手机号</label>
             <div className="phone-input-group">
-              <input 
-                type="tel" 
+              <input
+                type="tel"
                 id="phone"
-                placeholder="请输入手机号" 
+                placeholder="请输入手机号"
                 required
+                onChange={(e) => onUpdateFormData('phone', e.target.value)}
+                value={ formData.phone}
               />
               <VerificationCodeButton />
             </div>
           </li>
           <li>
             <label htmlFor="password">手机验证码</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               id="verificationCode"
-              placeholder="请输入手机验证码" 
+              placeholder="请输入手机验证码"
               required
+              onChange={(e) => onUpdateFormData('verificationCode', e.target.value)}
+              value={formData.verificationCode}
             />
           </li>
         </ul>

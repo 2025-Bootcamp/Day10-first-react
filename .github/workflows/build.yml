@@ -17,6 +17,7 @@ jobs:
         run: |
           cd my-app
           npm install
+          npm run lint
       - name: Build
         run: |
           cd my-app
